@@ -1,6 +1,7 @@
 from app.app import get_hash, verify_hash
 import re
 import pytest
+import sqlite3
 
 
 def test_get_hash():
@@ -27,12 +28,13 @@ def test_hash_computation(testing_string):
 
 
 @pytest.mark.parametrize(
-    "email,password", [("hello@hello.com", "asd"), ("strive@strive.com", "asdasd")]
+    "email,password", [("hello@hello.com", "asd"),
+                       ("strive@strive.com", "asdasd")]
 )
 def test_user_creation(email, password):
-    # TODO
-    # examples of what to test
     # 1. verify user is created
+    conn = sqlite3.connect("app/ml_app.db", check_same_thread=False)
+    with conn as c:
+        assert c.execute(
+            "SELECT * FROM users WHERE email = ? and password = ?", (email, get_hash(password)))
     # 2. verify you can validate the hash
-    # 3. whatever you come up with
-    pass
