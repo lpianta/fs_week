@@ -3,4 +3,7 @@
 best_model.pth
 model.pkl
 uploads
-ml_app.db
+*.db
+app/*.db
+.pytest_cache
+__pycache__
